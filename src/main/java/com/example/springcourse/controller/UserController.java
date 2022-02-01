@@ -19,17 +19,17 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return service.findAll();
     }
 
     @GetMapping("/users/{userId}")
-    public User getUser(@PathVariable Integer userId){
+    public User getUser(@PathVariable Integer userId) {
         return service.findOne(userId);
     }
 
     @PostMapping("/users")
-    public ResponseEntity<URI> createUser(@RequestBody User user){
+    public ResponseEntity<URI> createUser(@RequestBody User user) {
         User savedUser = service.saveUser(user);
 
         URI location = ServletUriComponentsBuilder
@@ -39,5 +39,11 @@ public class UserController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<URI> deleteUser(@PathVariable Integer userId) {
+        service.deleteUser(userId);
+        return ResponseEntity.noContent().build();
     }
 }

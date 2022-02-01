@@ -46,4 +46,13 @@ public class PostController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/users/{userId}/posts/{postId}")
+    public ResponseEntity<URI> deletePost(
+            @PathVariable Integer userId,
+            @PathVariable Integer postId
+    ) {
+        service.deletePost(userId, postId);
+        return ResponseEntity.noContent().build();
+    }
 }
