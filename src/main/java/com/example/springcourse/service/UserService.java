@@ -1,6 +1,7 @@
-package com.example.springcourse.users.service;
+package com.example.springcourse.service;
 
-import com.example.springcourse.users.model.User;
+import com.example.springcourse.model.User;
+import com.example.springcourse.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +36,6 @@ public class UserService {
                 .stream()
                 .filter(user -> Objects.equals(user.getId(), id))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new UserNotFoundException("User "+id.toString()+" not found"));
     }
 }

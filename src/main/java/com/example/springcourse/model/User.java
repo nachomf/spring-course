@@ -1,4 +1,4 @@
-package com.example.springcourse.users.model;
+package com.example.springcourse.model;
 
 import java.util.Date;
 
