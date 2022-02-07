@@ -3,6 +3,7 @@ package com.example.springcourse.service;
 import com.example.springcourse.exception.UserWithPostException;
 import com.example.springcourse.model.User;
 import com.example.springcourse.exception.NotFoundException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,9 @@ public class UserService {
     private final PostService postService;
 
     static {
-        users.add(new User(1, "Pepe", new Date()));
-        users.add(new User(2, "Maria", new Date()));
-        users.add(new User(3, "Juan", new Date()));
+        users.add(new User(1, "Pepe", new Date(),""));
+        users.add(new User(2, "Maria", new Date(),"asd"));
+        users.add(new User(3, "Juan", new Date(),"1234"));
     }
 
     public UserService(PostService postService) {
@@ -34,6 +35,10 @@ public class UserService {
     public User saveUser(User user) {
         if (user.getId() == null) {
             user.setId(users.size() + 1);
+        }
+
+        if (user.getPassword() == null) {
+            user.setPassword(RandomStringUtils.randomAlphanumeric(15));
         }
         users.add(user);
         return user;

@@ -1,5 +1,7 @@
 package com.example.springcourse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -14,11 +16,16 @@ public class User {
     @Past(message = "birth date should be in the past")
     private Date birthDate;
 
-    public User(Integer id, String name, Date birthDate) {
+    @Size(min = 3, max = 15, message = "password should have between 3 and 15 characters long")
+    @JsonIgnore
+    private String password;
+
+    public User(Integer id, String name, Date birthDate, String password) {
         super();
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -47,7 +54,14 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User [id=%s,name=%s,birthDate=%s]", id, name, birthDate);
+        return String.format("User [id=%s,name=%s,birthDate=%s,password=%s]", id, name, birthDate, password);
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
