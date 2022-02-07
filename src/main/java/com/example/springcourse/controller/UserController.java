@@ -2,8 +2,11 @@ package com.example.springcourse.controller;
 
 import com.example.springcourse.model.User;
 import com.example.springcourse.service.UserService;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,6 +28,23 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return service.findAll();
+    }
+
+    @GetMapping("/user-names")
+    public MappingJacksonValue getAllUserNames() {
+        List<User> users = service.findAll();
+
+        MappingJacksonValue mapping = new MappingJacksonValue(users);
+        mapping.setFilters(
+                new SimpleFilterProvider()
+                        .setFailOnUnknownId(false)
+                        .addFilter(
+                                "UsersFilter",
+                                SimpleBeanPropertyFilter.filterOutAllExcept("name")
+                        )
+        );
+
+        return mapping;
     }
 
     @GetMapping("/users/{userId}")

@@ -1,11 +1,13 @@
 package com.example.springcourse.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@JsonFilter("UsersFilter")
 public class User {
 
     private Integer id;
