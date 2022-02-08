@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{userId}")
-    public EntityModel<User> getUser(@PathVariable Integer userId) {
+    public EntityModel<User> getUser(@PathVariable Long userId) {
         User user = service.findOne(userId);
 
         return EntityModel
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<URI> deleteUser(@PathVariable Integer userId) {
+    public ResponseEntity<URI> deleteUser(@PathVariable Long userId) {
         service.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }

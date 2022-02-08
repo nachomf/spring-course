@@ -4,7 +4,6 @@ import com.example.springcourse.exception.UserWithPostException;
 import com.example.springcourse.model.User;
 import com.example.springcourse.exception.NotFoundException;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class UserService {
     private final PostService postService;
 
     static {
-        users.add(new User(1, "Pepe", new Date(),""));
-        users.add(new User(2, "Maria", new Date(),"asd"));
-        users.add(new User(3, "Juan", new Date(),"1234"));
+        users.add(new User(1L, "Pepe", new Date(),""));
+        users.add(new User(2L, "Maria", new Date(),"asd"));
+        users.add(new User(3L, "Juan", new Date(),"1234"));
     }
 
     public UserService(PostService postService) {
@@ -34,7 +33,7 @@ public class UserService {
 
     public User saveUser(User user) {
         if (user.getId() == null) {
-            user.setId(users.size() + 1);
+            user.setId((long) users.size() + 1L);
         }
 
         if (user.getPassword() == null) {
@@ -44,7 +43,7 @@ public class UserService {
         return user;
     }
 
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
         User user = this.findOne(userId);
         if (user == null) {
             throw new NotFoundException("User " + user.toString() + " not found");
@@ -57,7 +56,7 @@ public class UserService {
         users.remove(user);
     }
 
-    public User findOne(Integer id) {
+    public User findOne(Long id) {
         return users
                 .stream()
                 .filter(user -> Objects.equals(user.getId(), id))

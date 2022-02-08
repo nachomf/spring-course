@@ -11,15 +11,15 @@ import java.util.Objects;
 
 @Service
 public class PostService {
-    private static final HashMap<Integer, ArrayList<Post>> posts = new HashMap<>();
+    private static final HashMap<Long, ArrayList<Post>> posts = new HashMap<>();
 
-    public List<Post> findAll(Integer userId) {
+    public List<Post> findAll(Long userId) {
         List<Post> userPosts = posts.get(userId);
 
         return Objects.requireNonNullElseGet(userPosts, ArrayList::new);
     }
 
-    public Post findOne(Integer userId, Integer postId) {
+    public Post findOne(Long userId, Long postId) {
         return this.findAll(userId)
                 .stream()
                 .filter(post -> Objects.equals(post.getId(), postId))
@@ -27,7 +27,7 @@ public class PostService {
                 .orElseThrow(() -> new NotFoundException("Post " + postId.toString() + " for user " + userId.toString() + " not found"));
     }
 
-    public Post savePost(Integer userId, Post post) {
+    public Post savePost(Long userId, Post post) {
         ArrayList<Post> userPosts = posts.get(userId);
         if (userPosts == null) {
             posts.put(userId, new ArrayList<>());
@@ -35,14 +35,14 @@ public class PostService {
         }
 
         if (post.getId() == null) {
-            post.setId(userPosts.size() + 1);
+            post.setId((long) userPosts.size() + 1);
         }
 
         userPosts.add(post);
         return post;
     }
 
-    public void deletePost(Integer userId, Integer postId) {
+    public void deletePost(Long userId, Long postId) {
         Post post = this.findOne(userId, postId);
         if (post == null) {
             throw new NotFoundException("Post " + postId.toString() + " for user " + userId.toString() + " not found");

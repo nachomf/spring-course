@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class Post {
     private Date timestamp;
-    private Integer id;
+    private Long id;
     private String message;
 
-    public Post(Date timestamp, Integer id, String message) {
+    public Post(Date timestamp, Long id, String message) {
         this.id = id;
         this.timestamp = timestamp;
         this.message = message;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

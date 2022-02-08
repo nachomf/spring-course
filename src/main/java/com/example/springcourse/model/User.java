@@ -3,14 +3,20 @@ package com.example.springcourse.model;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @JsonFilter("UsersFilter")
+@Entity
 public class User {
 
-    private Integer id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Size(min = 2, message = "name '${validatedValue}' should have 2 characters at least")
     private String name;
@@ -22,7 +28,9 @@ public class User {
     @JsonIgnore
     private String password;
 
-    public User(Integer id, String name, Date birthDate, String password) {
+    protected User(){}
+
+    public User(Long id, String name, Date birthDate, String password) {
         super();
         this.id = id;
         this.name = name;
@@ -30,11 +38,18 @@ public class User {
         this.password = password;
     }
 
-    public Integer getId() {
+    public User(String name, Date birthDate, String password) {
+        super();
+        this.name = name;
+        this.birthDate = birthDate;
+        this.password = password;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

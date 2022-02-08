@@ -19,21 +19,21 @@ public class PostController {
     }
 
     @GetMapping("/users/{userId}/posts")
-    public List<Post> getAllPosts(@PathVariable Integer userId) {
+    public List<Post> getAllPosts(@PathVariable Long userId) {
         return service.findAll(userId);
     }
 
     @GetMapping("/users/{userId}/posts/{postId}")
     public Post getPost(
-            @PathVariable Integer userId,
-            @PathVariable Integer postId
+            @PathVariable Long userId,
+            @PathVariable Long postId
     ) {
         return service.findOne(userId, postId);
     }
 
     @PostMapping("/users/{userId}/posts")
     public ResponseEntity<URI> createPost(
-            @PathVariable Integer userId,
+            @PathVariable Long userId,
             @RequestBody Post post
     ) {
         Post savedPost = service.savePost(userId,post);
@@ -49,8 +49,8 @@ public class PostController {
 
     @DeleteMapping("/users/{userId}/posts/{postId}")
     public ResponseEntity<URI> deletePost(
-            @PathVariable Integer userId,
-            @PathVariable Integer postId
+            @PathVariable Long userId,
+            @PathVariable Long postId
     ) {
         service.deletePost(userId, postId);
         return ResponseEntity.noContent().build();
