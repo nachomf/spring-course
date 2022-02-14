@@ -2,6 +2,7 @@ package com.example.springcourse.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 @JsonFilter("UsersFilter")
 @Entity
@@ -28,7 +30,8 @@ public class User {
     @JsonIgnore
     private String password;
 
-    protected User(){}
+    protected User() {
+    }
 
     public User(Long id, String name, Date birthDate, String password) {
         super();
@@ -42,7 +45,7 @@ public class User {
         super();
         this.name = name;
         this.birthDate = birthDate;
-        this.password = password;
+        this.password = Objects.requireNonNullElseGet(password, () -> RandomStringUtils.randomAlphanumeric(15));
     }
 
     public Long getId() {
